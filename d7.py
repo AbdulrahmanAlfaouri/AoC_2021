@@ -3,27 +3,27 @@ with open('input.txt') as in_text:
     in_numbers = [int(num) for num in in_numbers]
 
 
-all_of_the_really_shits = []
+all_fuel_needed = []
 
 for i in range(min(in_numbers), max(in_numbers)):
     print(f'using i = {i}')
-    really_shit = 0
-    for hehe in in_numbers:
-        shit = 0
-        full_shit = 0
-        m = 0
-        shit += abs(i-hehe)
-        for pshit in range(shit+1):
-            full_shit += pshit
+    fule_needed = 0
+    for pos_num in in_numbers:
+        fuel_needed_for_pos = 0
+        fuel_sum_for_all_steps = 0
 
-        really_shit += full_shit
+        fuel_needed_for_pos += abs(i - pos_num)
+        for pos_step in range(fuel_needed_for_pos + 1):
+            fuel_sum_for_all_steps += pos_step
+
+        fule_needed += fuel_sum_for_all_steps
 
 
 
-    all_of_the_really_shits.append(really_shit)
+    all_fuel_needed.append(fule_needed)
 
 try:
-    print(min(all_of_the_really_shits))
+    print(min(all_fuel_needed))
 except ValueError:
-    print('shit')
+    print('all fuel needed is [] -_-')
 
