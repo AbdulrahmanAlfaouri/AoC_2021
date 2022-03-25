@@ -146,7 +146,5 @@ for line in in_digits:
     outsum += int(''.join(output))
 
 
-# 978171
-
 print(outsum)
 
