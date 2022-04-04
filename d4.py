@@ -34,7 +34,6 @@ def main():
                 #     if inNumber in bingcolumnsnNumbers:
                 #         bingcolumnsnNumbers.remove(inNumber)
 
-
                 theSum = 0
                 for unmarkedNumber in unMarkedNumbers:
                     theSum += int(unmarkedNumber)
@@ -92,7 +91,7 @@ class BingoBoard:
         for num1, (j, k) in enumerate(zip(board, emtpyBoardColumns)):
             for hh in in_numbers_slice:
                 if hh in board[num1]:
-                    # update the empty board with the matched numbers in the same position in the board
+                    # update the empty board with the matched numbers in the same positions as the board
                     emtpyBoardColumns[num1][board[num1].index(hh)] = emtpyBoardColumns[num1][board[num1].index(hh)].replace("", hh)
 
         return emtpyBoardColumns
@@ -106,7 +105,6 @@ class BingoBoard:
                     # it's a losing row or column if even one cell  = ''
                     if cell[numAndcell[0]] == "":
                         winningCondition = False
-
                 if winningCondition:
                     return True
 

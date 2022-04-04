@@ -33,7 +33,5 @@ for day in range(256):
     shift()
     addshit()
 
-
 theSum = list(fish_timers.values())
 print(sum(theSum))
-

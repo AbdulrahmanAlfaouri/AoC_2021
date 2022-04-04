@@ -37,11 +37,11 @@ for line in in_digits:
 
     for digit in unique_signal_patterns:
         if len(digit) == 3:
-            all_numbers["seven"] = digit  # Got seven
+            all_numbers["seven"] = digit  # 7
         elif len(digit) == 7:
-            all_numbers["eight"] = digit  # Got eight
+            all_numbers["eight"] = digit  # 8
         elif len(digit) == 4:
-            all_numbers["four"] = digit  # Got four
+            all_numbers["four"] = digit  # 4
         elif len(digit) == 2:
             all_numbers["one"] = digit  # Got one
         elif len(digit) == 6:  # 9 or 6 or 0
@@ -52,7 +52,7 @@ for line in in_digits:
     for digit1 in unique_signal_patterns:
         for segment in digit1:
             if (segment in all_numbers['seven']) and (segment not in all_numbers['one']):
-                up = segment  # Got up segment
+                up = segment  # up segment
             elif (
                 (segment in all_numbers['eight'])
                 and (segment not in all_numbers['four'])
@@ -64,24 +64,21 @@ for line in in_digits:
 
 
     for segment2 in downAndDownleft:
-
         for digit2 in towAndthreeAndfive:
             if segment2 not in digit2:
                 fiveAndthree.append(digit2)
-                downleft = segment2  # Got down L segment
+                downleft = segment2  # down L segment
 
-    all_numbers['tow'] = "".join([i for i in towAndthreeAndfive if i not in fiveAndthree])  # Got tow
-
+    all_numbers['tow'] = "".join([i for i in towAndthreeAndfive if i not in fiveAndthree])  # 2
     downAndDownleft.remove(downleft)
-
-    down = downAndDownleft[0]  # got down
+    down = downAndDownleft[0]  # down segment
 
     for digit3 in fiveAndthree:
         for segment in digit3:
             if segment not in all_numbers["tow"]:
                 downright = segment
 
-    nine = "".join([i for i in all_numbers["eight"] if i != downleft])  # Got nine
+    nine = "".join([i for i in all_numbers["eight"] if i != downleft])  # 9
     nineOrd = sum([ord(i) for i in all_numbers["nine"]])
     for digit4 in nineAndzeroAndsix:
         digit4Ord = sum([ord(j) for j in digit4])
@@ -96,16 +93,16 @@ for line in in_digits:
     for segment3 in upleftAndDownright:
         for digit6 in fiveAndthree:
             if segment3 not in digit6:
-                all_numbers["three"] = digit6  # Got three
+                all_numbers["three"] = digit6  # 3
                 break
 
     fiveAndthree.remove(all_numbers["three"])
-    five = fiveAndthree[0]  # Got five
+    five = fiveAndthree[0]  # 5
 
     for digit6 in sixAndZero:
         for onesegment in all_numbers["one"]:
             if onesegment not in digit6:
-                all_numbers["six"] = digit6  # Got six
+                all_numbers["six"] = digit6  # 6
                 break
 
     sixAndZero.remove(all_numbers["six"])
@@ -147,6 +144,5 @@ for line in in_digits:
 
     print(output)
     outsum += int("".join(output))
-
 
 print(outsum)

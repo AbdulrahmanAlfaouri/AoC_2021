@@ -6,7 +6,6 @@ with open('input.txt') as in_text:
 all_fuel_needed = []
 
 for i in range(min(in_numbers), max(in_numbers)):
-    print(f'using i = {i}')
     fuel_needed = 0
     for pos_num in in_numbers:
         fuel_needed_for_pos = 0
@@ -26,4 +25,3 @@ try:
     print(min(all_fuel_needed))
 except ValueError:
     print('all fuel needed is [] -_-')
-
