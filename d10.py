@@ -11,7 +11,7 @@ bracets2 = {'>':'<', ')':'(', '}':'{', ']':'['}
 def get_score_and_incomplete_lines(in_text):
     openings = []
     syntex_error_socre = 0
-    not_corrupted = []
+    not_corrupted = in_text[:]
 
     for chunk in in_text:
         for char in chunk:
@@ -23,8 +23,6 @@ def get_score_and_incomplete_lines(in_text):
                 last_opening = openings[-1]
                 if bracets1[last_opening] == ending:
                     openings.pop()
-                    if chunk not in not_corrupted:
-                        not_corrupted.append(chunk)
                 else:
                     if ending == '}':
                         syntex_error_socre += 1197
