@@ -1,62 +1,67 @@
+import numpy as np
 import logging
-import numpy
 from logging import info
-from itertools import permutations, product, combinations
+from itertools import product
 
 logging.basicConfig(filename="test.txt", level=logging.INFO, format="%(message)s")
 
 with open("input.txt") as text:
     in_text = [i.strip() for i in text.readlines()]
-    in_text = [[int(i) for i in j] for j in in_text]
+    points_list = np.array([[int(i) for i in j] for j in in_text])
 
 shifts_to_adjecent_points = list(product([-1, 1], repeat=2))
-for i in [(0, 1), (0, -1), (-1, 0), (1, 0)]:
+for i in [(1, 0), (-1, 0), (0, -1), (0, 1)]:
     shifts_to_adjecent_points.append(i)
 
-number_of_flashs = 0
 
-def get_adjecent_points(line, in_line_posetion):
+def get_adjecent_points(in_line_posetion, line):
+    x = in_line_posetion
+    y = line
+
     for shift in shifts_to_adjecent_points:
-        x, y = shift[1], shift[0]
+        x_shift, y_shift = shift[0], shift[1]
 
-        try:
-            adjecent_point = (line+y, in_line_posetion+x)
+        adjecent_point = (x + x_shift, y + y_shift)
 
-            if adjecent_point[0] >= 0 and adjecent_point[1] >= 0:
-                in_text[line+y][in_line_posetion+x] += 1
-                adjecent_point_value = in_text[line+y][in_line_posetion+x]
+        # to not get a negative index and end up on the other side of the list
+        if adjecent_point[0] >= 0 and adjecent_point[1] >= 0:
+            try:
+                points_list[y + y_shift, x + x_shift] += 1
+                adjecent_point_value = points_list[y + y_shift, x + x_shift]
                 if adjecent_point_value > 9 and adjecent_point not in flashed:
                     flashed.append(adjecent_point)
-        except IndexError:
-            pass
-            # print(f'{(current_adjecent_point)} is not a valid point')
+            except IndexError:
+                pass
 
 
-step = 0
-while True:
-    flashed = []
-    added_to = []
-    for step_part in range(3):
-        for line_num, line in enumerate(in_text):
-            for number_posetion, num in enumerate(line):
-                if step_part == 0:
-                    in_text[line_num][number_posetion] += 1
-                if step_part == 1:
-                    if num > 9:
-                        flash_posetion = (line_num, number_posetion)
-                        if flash_posetion not in flashed:
-                            flashed.append(flash_posetion)
+def get_all_zeros_step():
+    global flashed
+    step = 0
+    number_of_flashs = 0
+    all_zeros = False
+    while not all_zeros:
+        flashed = []
+        for step_part in range(2):
+            for line_num, line in enumerate(points_list):
+                for number_posetion, num in enumerate(line):
+                    if step_part == 0:
+                        points_list[line_num, number_posetion] += 1
+                    if step_part == 1:
+                        if num > 9:
+                            flash_posetion = (number_posetion, line_num)
+                            if flash_posetion not in flashed:
+                                flashed.append(flash_posetion)
 
-    for flashed_point in flashed:
-        get_adjecent_points(flashed_point[0], flashed_point[1])
-        
-    for flashed_point in flashed:
-        number_of_flashs += 1
-        in_text[flashed_point[0]][flashed_point[1]] = 0
+        for point in flashed:
+            get_adjecent_points(point[0], point[1])
+
+        for point in flashed:
+            number_of_flashs += 1
+            points_list[point[1], point[0]] = 0
+
+        if np.all((points_list == 0)):
+            return step + 1
+        step += 1
 
 
-    if all([number==0 for line in in_text for number in line]) == True:
-        info(step+1)
-        break
-
-    step += 1
+theStep = get_all_zeros_step()
