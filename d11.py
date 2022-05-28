@@ -1,9 +1,7 @@
 import numpy as np
-import logging
-from logging import info
 from itertools import product
 
-logging.basicConfig(filename="test.txt", level=logging.INFO, format="%(message)s")
+
 
 with open("input.txt") as text:
     in_text = [i.strip() for i in text.readlines()]
